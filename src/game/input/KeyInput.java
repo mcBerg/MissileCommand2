@@ -1,11 +1,15 @@
 package game.input;
 
-import game.ID;
 import game.objects.GameObject;
 import game.objects.Handler;
+import game.objects.ID;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import static game.Settings.*;
+import static game.objects.GameObjectFactory.spawnLightningBase;
+import static game.objects.GameObjectFactory.spawnMissileBase;
 
 public class KeyInput extends KeyAdapter {
 
@@ -18,22 +22,27 @@ public class KeyInput extends KeyAdapter {
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
 
-    for (GameObject obj : handler.object) {
-      if (obj.getId() == ID.Player) {
-        // key events
-        if (key == KeyEvent.VK_W) {
-          obj.setVelY(obj.getVelY() - 5);
-        }
-        if (key == KeyEvent.VK_S) {
-          obj.setVelY(obj.getVelY() + 5);
-        }
-        if (key == KeyEvent.VK_D) {
-          obj.setVelX(obj.getVelX() + 5);
-        }
-        if (key == KeyEvent.VK_A) {
-          obj.setVelX(obj.getVelX() - 5);
-        }
-      }
+    if (key == KeyEvent.VK_ENTER) {
+      spawnLightningBase(handler);
+    }
+
+    if (key == KeyEvent.VK_Q) {
+      System.exit(0);
+    }
+    if (key == KeyEvent.VK_SPACE) {
+      spawnMissileBase(handler);
+    }
+    if (key == KeyEvent.VK_UP) {
+      setAim(getAim() + 1);
+    }
+    if (key == KeyEvent.VK_DOWN) {
+      setAim(getAim() - 1);
+    }
+    if (key == KeyEvent.VK_RIGHT) {
+      setDistance(getDistance() + 1);
+    }
+    if (key == KeyEvent.VK_LEFT) {
+      setDistance(getDistance() - 1);
     }
   }
 

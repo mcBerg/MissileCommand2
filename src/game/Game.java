@@ -2,23 +2,18 @@ package game;
 
 import game.input.KeyInput;
 import game.input.MouseInput;
-import game.objects.Enemy;
+import game.objects.GameObjectFactory;
 import game.objects.Handler;
-import game.objects.Player;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 
-
-  public static final int WIDTH = 1080;
-  public static final int HEIGHT = (WIDTH / 12) * 9;
   private Thread thread;
   private boolean running = false;
-  private Random r;
   private Handler handler;
+  private Point[] stars;
 
   public static void main(String[] args) {
     new Game();
@@ -29,12 +24,23 @@ public class Game extends Canvas implements Runnable {
     this.addKeyListener(new KeyInput(handler));
     this.addMouseListener(new MouseInput(handler));
 
-    new Window(WIDTH, HEIGHT, "Missile Command", this);
+    stars = new Point[15];
+    fillStars();
 
-    r = new Random(System.nanoTime());
+    new Window(Settings.WIDTH, Settings.HEIGHT, "Missile Command", this);
 
-    handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
-    handler.addObject(new Enemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Enemy));
+    GameObjectFactory.spawnEnemyL2(handler);
+    GameObjectFactory.spawnEnemyL2(handler);
+    GameObjectFactory.spawnEnemyL2(handler);
+    GameObjectFactory.spawnEnemyL2(handler);
+    GameObjectFactory.spawnEnemyL2(handler);
+  }
+
+  private void fillStars() {
+    for (int i = 0; i < stars.length; i++) {
+      stars[i] =
+          new Point(Settings.r.nextInt(Settings.WIDTH), Settings.r.nextInt(Settings.HEIGHT / 3));
+    }
   }
 
   public synchronized void start() {
@@ -74,8 +80,7 @@ public class Game extends Canvas implements Runnable {
 
       if (System.currentTimeMillis() - timer > 1000) {
         timer += 1000;
-        System.out.println("FPS: " + frames);
-        System.out.printf("Player: %s,%s", handler.getPlayer().getX(), handler.getPlayer().getY());
+        System.out.printf("FPS: %s\n", frames);
         frames = 0;
       }
     }
@@ -89,8 +94,54 @@ public class Game extends Canvas implements Runnable {
       return;
     }
     Graphics g = bs.getDrawGraphics();
-    g.setColor(Color.BLACK);
-    g.fillRect(0, 0, WIDTH, HEIGHT);
+    g.setColor(new Color(0, 0, 0));
+    g.fillRect(0, 0, Settings.WIDTH, Settings.HEIGHT);
+
+    g.setColor(Color.white);
+    for (int i = 0; i < 5; i++) {
+      g.fillOval(stars[i].x, stars[i].y, 2, 2);
+    }
+
+    g.setColor(Color.YELLOW);
+    for (int i = 5; i < 10; i++) {
+      g.fillOval(stars[i].x, stars[i].y, 2, 2);
+    }
+
+    g.setColor(Color.ORANGE);
+    for (int i = 10; i < 15; i++) {
+      g.fillOval(stars[i].x, stars[i].y, 2, 2);
+    }
+
+    g.setColor(new Color(0, 0, 150));
+    g.fillOval(
+        0 - Settings.WIDTH,
+        Settings.HEIGHT - (Settings.HEIGHT / 2),
+        Settings.WIDTH * 3,
+        Settings.HEIGHT * 2);
+
+    g.setColor(new Color(0, 204, 0));
+    g.fillOval(
+        0 - Settings.WIDTH / 4,
+        Settings.HEIGHT - (Settings.HEIGHT / 5),
+        Settings.WIDTH / 2,
+        Settings.HEIGHT / 4);
+
+    g.setColor(new Color(0, 153, 0));
+    g.fillOval(0, Settings.HEIGHT - (Settings.HEIGHT / 5), Settings.WIDTH * 2, Settings.HEIGHT / 2);
+
+    g.setColor(new Color(0, 102, 0));
+    g.fillOval(
+        0 - Settings.WIDTH / 4,
+        Settings.HEIGHT - (Settings.HEIGHT / 10),
+        Settings.WIDTH * 2,
+        Settings.HEIGHT / 4);
+
+    g.setColor(new Color(0, 51, 0));
+    g.fillOval(
+        0 - Settings.WIDTH / 2,
+        Settings.HEIGHT - Settings.HEIGHT / 20,
+        Settings.WIDTH * 2,
+        Settings.HEIGHT / 10);
 
     handler.render(g);
 

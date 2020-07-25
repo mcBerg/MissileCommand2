@@ -1,0 +1,7 @@
+
+”
+java:S1319
+"rThe type of the "object" object should be an interface such as "List" rather than the implementation "LinkedList".(Ù­„Ýùÿÿÿÿ8ý¢ŠÁ·.
+t
+java:S1104
+"RMake object a static final constant or non-public and provide accessors if needed.(Ù­„Ýùÿÿÿÿ8ý¢ŠÁ·.
