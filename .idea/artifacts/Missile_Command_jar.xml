@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="Missile Command:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Missile_Command_jar</output-path>
     <root id="archive" name="Missile Command.jar">
-      <element id="module-output" name="Missile Command" />
+      <element id="module-output" name="MissileCommand" />
     </root>
   </artifact>
 </component>
