@@ -2,6 +2,7 @@ package org.berg.missile.command.objects.player;
 
 import org.berg.missile.command.Settings;
 import org.berg.missile.command.objects.GameObject;
+import org.berg.missile.command.objects.GameObjectFactory;
 import org.berg.missile.command.objects.Handler;
 import org.berg.missile.command.objects.ID;
 import org.berg.missile.command.objects.weapon.Lightning;
@@ -23,6 +24,11 @@ public class LightningBase extends GameObject {
     if (getTicks() > 10000) {
       setTicks(0);
     }
+    if (getTicks() % 10 == 0) {
+      GameObjectFactory.spawnHuman(
+          r.nextInt(WIDTH), ALIEN_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
+    }
+
     if (getTicks() % Settings.getLightningSpeed() == 0) {
       getHandler()
           .addObject(

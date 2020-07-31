@@ -16,7 +16,7 @@ public class Settings {
   private static int lightningSpeed = 25;
   private static int aim = 5;
   private static int distance = 10;
-  private static int laserTime = 2;
+  private static int laserTime = 50;
   public static final int ALIEN_MAX_HEIGHT = HEIGHT / 5 * 4 + HEIGHT / 10;
   public static final int UFO_MAX_HEIGHT = HEIGHT / 5 * 3;
   public static final int MOTHERSHIP_MAX_HEIGHT = HEIGHT / 5 * 2;

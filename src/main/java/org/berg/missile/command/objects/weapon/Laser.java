@@ -22,34 +22,26 @@ public class Laser extends GameObject {
     this.player = player;
     this.enemy = enemy;
     setX(r.nextInt(WIDTH));
-    setY(r.nextInt(HEIGHT));
-    setVelX(r.nextInt(WIDTH / 25) - WIDTH / 50);
-    setVelY(r.nextInt(HEIGHT / 25) - HEIGHT / 50);
+    setY(HEIGHT - HEIGHT / 6 * getLaserLevel());
+    setVelX(r.nextBoolean() ? 1 : -1);
+    setVelY(r.nextBoolean() ? 1 : -1);
   }
 
   @Override
   public void tick() {
+    if (getTicks() == 0) {
+      enemy = getHandler().getClosestLowerEnemy(new Point(getX(), getY()));
+    }
     setTicks(getTicks() + 1);
     if (getTicks() > 25) {
-      setHP(0);
+      setHp(0);
       setAlive(false);
     }
-    die();
-    move();
-    bounceOffEdges();
-    if (getY() > ALIEN_MAX_HEIGHT) {
-      setY(ALIEN_MAX_HEIGHT);
-      setVelY(-getVelY());
-    }
-    if (getY() < ((HEIGHT - PORTAL_MAX_HEIGHT) / getLaserLevel())) {
-      setY((HEIGHT - PORTAL_MAX_HEIGHT) / getLaserLevel());
-      setVelY(-getVelY());
-    }
-    enemy = didCollide();
-    if (enemy != null) {
-      addPoints(enemy.getPoints());
+    if (getTicks() == 20 && enemy != null) {
+      player.addPoints(enemy.getPoints());
       enemy.setAlive(false);
     }
+    die();
   }
 
   @Override
@@ -72,7 +64,9 @@ public class Laser extends GameObject {
       if (laserLevel == 5) {
         flicker(g, Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE);
       }
-      g.drawLine(getX() + i, getY(), player.getX() + i, player.getY());
+      if (enemy != null) {
+        g.drawLine(enemy.getX() + i, enemy.getY(), player.getX() + i, player.getY());
+      }
     }
   }
 }

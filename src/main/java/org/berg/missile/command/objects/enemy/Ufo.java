@@ -1,6 +1,5 @@
 package org.berg.missile.command.objects.enemy;
 
-import org.berg.missile.command.Settings;
 import org.berg.missile.command.objects.GameObject;
 import org.berg.missile.command.objects.GameObjectFactory;
 import org.berg.missile.command.objects.Handler;
@@ -8,12 +7,14 @@ import org.berg.missile.command.objects.ID;
 
 import java.awt.*;
 
+import static org.berg.missile.command.Settings.*;
+
 public class Ufo extends GameObject {
 
   public Ufo(int x, int y, Handler handler) {
     super(x, y, ID.Enemy, handler);
-    setVelX(1 + Settings.r.nextInt(10));
-    setTicks(Settings.r.nextInt(1000));
+    setVelX(1 + r.nextInt(10));
+    setTicks(r.nextInt(1000));
     setPoints(10);
   }
 
@@ -23,32 +24,30 @@ public class Ufo extends GameObject {
     if (getTicks() == 10000) {
       setTicks(0);
     }
-    if (getTicks() % Settings.ALIEN_SPAWN_SPEED == 50) {
-      setVelX(Settings.r.nextInt(30) - 15);
-      setVelY(Settings.r.nextInt(5) - 2);
+    if (getTicks() % ALIEN_SPAWN_SPEED == 50) {
+      setVelX(r.nextInt(30) - 15);
+      setVelY(r.nextInt(5) - 2);
     }
-    if (getTicks() % Settings.ALIEN_SPAWN_SPEED < 50) {
+    if (getTicks() % ALIEN_SPAWN_SPEED < 50) {
       setVelX(0);
       setVelY(0);
     }
 
     move();
-    bounceOffEdges();
-    if (getY() < Settings.UFO_MAX_HEIGHT) {
-      setY(Settings.UFO_MAX_HEIGHT);
+    bounceOffEdges(0, WIDTH, UFO_MAX_HEIGHT, UFO_MAX_HEIGHT + HEIGHT / 10);
+    if (getY() < UFO_MAX_HEIGHT) {
+      setY(UFO_MAX_HEIGHT);
       setVelY(-getVelY());
     }
-    if (getY() > Settings.UFO_MAX_HEIGHT + Settings.HEIGHT / 10) {
-      setY(Settings.UFO_MAX_HEIGHT + Settings.HEIGHT / 10);
+    if (getY() > UFO_MAX_HEIGHT + HEIGHT / 10) {
+      setY(UFO_MAX_HEIGHT + HEIGHT / 10);
       setVelY(-getVelY());
     }
     die();
 
-    if (isAlive() && getTicks() % Settings.ALIEN_SPAWN_SPEED == 50) {
+    if (isAlive() && getTicks() % ALIEN_SPAWN_SPEED == 50) {
       GameObjectFactory.spawnAlien(
-          getX() + 16,
-          Settings.ALIEN_MAX_HEIGHT + Settings.r.nextInt(Settings.HEIGHT / 10),
-          getHandler());
+          getX() + 16, ALIEN_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
     }
   }
 
@@ -73,53 +72,25 @@ public class Ufo extends GameObject {
     g.fillOval(getX() + 24 + offset, getY() + 6, 4, 4);
 
     if (isAlive()) {
-      if (getTicks() % Settings.ALIEN_SPAWN_SPEED > 40
-          && getTicks() % Settings.ALIEN_SPAWN_SPEED < 50) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > 40 && getTicks() % ALIEN_SPAWN_SPEED < 50) {
         g.setColor(new Color(115, 115, 255));
-        g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 6, Settings.HEIGHT);
-        g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 6, Settings.HEIGHT);
+        g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 6, HEIGHT);
+        g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 6, HEIGHT);
       }
-      if (getTicks() % Settings.ALIEN_SPAWN_SPEED > 30
-          && getTicks() % Settings.ALIEN_SPAWN_SPEED < 40) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > 30 && getTicks() % ALIEN_SPAWN_SPEED < 40) {
         g.setColor(new Color(115, 115, 255));
-        g.drawLine(
-            getX() + 14,
-            getY() + 16,
-            getX() + 14 - 5,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 3);
-        g.drawLine(
-            getX() + 18,
-            getY() + 16,
-            getX() + 18 + 5,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 3);
+        g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 5, getY() + ((HEIGHT - getY()) / 4) * 3);
+        g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 5, getY() + ((HEIGHT - getY()) / 4) * 3);
       }
-      if (getTicks() % Settings.ALIEN_SPAWN_SPEED > 20
-          && getTicks() % Settings.ALIEN_SPAWN_SPEED < 30) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > 20 && getTicks() % ALIEN_SPAWN_SPEED < 30) {
         g.setColor(new Color(115, 115, 255));
-        g.drawLine(
-            getX() + 14,
-            getY() + 16,
-            getX() + 14 - 4,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 2);
-        g.drawLine(
-            getX() + 18,
-            getY() + 16,
-            getX() + 18 + 4,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 2);
+        g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 4, getY() + ((HEIGHT - getY()) / 4) * 2);
+        g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 4, getY() + ((HEIGHT - getY()) / 4) * 2);
       }
-      if (getTicks() % Settings.ALIEN_SPAWN_SPEED > 10
-          && getTicks() % Settings.ALIEN_SPAWN_SPEED < 20) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > 10 && getTicks() % ALIEN_SPAWN_SPEED < 20) {
         g.setColor(new Color(115, 115, 255));
-        g.drawLine(
-            getX() + 14,
-            getY() + 16,
-            getX() + 14 - 2,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 1);
-        g.drawLine(
-            getX() + 18,
-            getY() + 16,
-            getX() + 18 + 2,
-            getY() + ((Settings.HEIGHT - getY()) / 4) * 1);
+        g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 2, getY() + ((HEIGHT - getY()) / 4) * 1);
+        g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 2, getY() + ((HEIGHT - getY()) / 4) * 1);
       }
     }
   }

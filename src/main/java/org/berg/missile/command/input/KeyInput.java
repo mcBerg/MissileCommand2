@@ -53,7 +53,7 @@ public class KeyInput extends KeyAdapter {
   }
 
   public void keyReleased(KeyEvent r) {
-    for (GameObject obj : handler.object) {
+    for (GameObject obj : handler.getObject()) {
       if (obj.getId() == ID.Player) {}
     }
   }

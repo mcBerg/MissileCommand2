@@ -39,7 +39,7 @@ public class GameObjectFactory {
   }
 
   public static void spawnNextBase(Handler handler) {
-    int count = handler.getPlayerCount();
+    int count = handler.getBaseCount();
     if (count < 5) {
       spawnLightningBase(handler);
     } else if (count < 10) {
@@ -79,7 +79,7 @@ public class GameObjectFactory {
   }
 
   private static Point getSpawnLocation(Handler handler) {
-    int count = handler.getPlayerCount() % 5;
+    int count = handler.getBaseCount() % 5;
     int place = 0;
     if (count == 0) {
       place = 3;
@@ -97,5 +97,11 @@ public class GameObjectFactory {
       place = 4;
     }
     return new Point((Settings.WIDTH / 5) * place - Settings.WIDTH / 10, Settings.HEIGHT - 32);
+  }
+
+  public static void spawnHuman(int x, int y, Handler handler) {
+    if (handler.getHumanCount() <= 10) {
+      handler.addObject(new Human(x, y, handler));
+    }
   }
 }

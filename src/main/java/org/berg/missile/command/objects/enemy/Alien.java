@@ -8,7 +8,7 @@ import org.berg.missile.command.objects.ID;
 
 import java.awt.*;
 
-import static org.berg.missile.command.Settings.r;
+import static org.berg.missile.command.Settings.*;
 
 @Getter
 @Setter
@@ -16,17 +16,21 @@ public class Alien extends GameObject {
 
   public Alien(int x, int y, Handler handler) {
     super(x, y, ID.Enemy, handler);
-    this.setPoints(0);
+    setPoints(1);
   }
 
   @Override
   public void tick() {
     setTicks(getTicks() + 1);
     if (getTicks() % 100 == 0) {
-      setVelX(r.nextInt(10) - 5);
+      setVelX(r.nextInt(11) - 5);
+      setVelY(r.nextInt(5) - 2);
+    }
+    if (getTicks() > 10000) {
+      setTicks(0);
     }
     move();
-    bounceOffEdges();
+    bounceOffEdges(0, WIDTH, ALIEN_MAX_HEIGHT, HEIGHT);
     die();
   }
 

@@ -14,6 +14,8 @@ public class ConstructionShip extends GameObject {
   public ConstructionShip(int x, int y, Handler handler) {
     super(x, y, ID.Enemy, handler);
     setVelX(1);
+    this.setPoints(5000);
+    setTicks(r.nextInt(1000));
   }
 
   @Override
@@ -28,7 +30,7 @@ public class ConstructionShip extends GameObject {
     }
 
     move();
-    bounceOffEdges();
+    bounceOffEdges(0, WIDTH, CONSTRUCTION_MAX_HEIGHT, CONSTRUCTION_MAX_HEIGHT);
     die();
   }
 

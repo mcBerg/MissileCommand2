@@ -13,7 +13,8 @@ public class Mothership extends GameObject {
 
   public Mothership(int x, int y, Handler handler) {
     super(x, y, ID.Enemy, handler);
-    setVelX(1 + r.nextInt(11) - 5);
+    setVelX(r.nextInt(11) - 5);
+    setVelY(r.nextInt(5) - 2);
     setTicks(r.nextInt(1000));
     setPoints(100);
   }
@@ -24,11 +25,17 @@ public class Mothership extends GameObject {
     if (getTicks() > 10000) {
       setTicks(0);
     }
-    if (getTicks() % 500 == 0) {
+    if (getTicks() % 550 == 0) {
       GameObjectFactory.spawnUfo(getX(), UFO_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
+      setVelX(r.nextInt(11) - 5);
+      setVelY(r.nextInt(5) - 2);
+    }
+    if (getTicks() % 500 == 0) {
+      setVelX(0);
+      setVelY(0);
     }
     move();
-    bounceOffEdges();
+    bounceOffEdges(0, WIDTH, MOTHERSHIP_MAX_HEIGHT, MOTHERSHIP_MAX_HEIGHT + HEIGHT / 10);
     die();
   }
 
@@ -37,8 +44,8 @@ public class Mothership extends GameObject {
     g.setColor(new Color(50, 50, 50));
     g.fillPolygon(
         new Polygon(
-            new int[] {getX(), getX() - 6, getX() + 128},
-            new int[] {getY(), getY() + 32, getY() + 16},
+            new int[] {getX() - 64, getX() - 72, getX() + 64},
+            new int[] {getY() - 16, getY() + 16, getY()},
             3));
   }
 }

@@ -4,6 +4,7 @@ import org.berg.missile.command.input.KeyInput;
 import org.berg.missile.command.input.MouseInput;
 import org.berg.missile.command.objects.GameObjectFactory;
 import org.berg.missile.command.objects.Handler;
+import org.berg.missile.command.objects.status.Status;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -32,6 +33,7 @@ public class Game extends Canvas implements Runnable {
     new Window(Settings.WIDTH, Settings.HEIGHT, "Missile Command", this);
 
     GameObjectFactory.spawnConstructionShip(0, 0, handler);
+    handler.addObject(new Status(handler));
   }
 
   private void fillStars() {
