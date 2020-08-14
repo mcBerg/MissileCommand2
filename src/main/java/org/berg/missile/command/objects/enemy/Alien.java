@@ -21,17 +21,17 @@ public class Alien extends GameObject {
 
   @Override
   public void tick() {
-    setTicks(getTicks() + 1);
+    countTicks();
+    changeDirection(100, 5, 2);
+
     if (getTicks() % 100 == 0) {
       setVelX(r.nextInt(11) - 5);
       setVelY(r.nextInt(5) - 2);
     }
-    if (getTicks() > 10000) {
-      setTicks(0);
-    }
     move();
     bounceOffEdges(0, WIDTH, ALIEN_MAX_HEIGHT, HEIGHT);
     die();
+    resetTicks(100);
   }
 
   @Override

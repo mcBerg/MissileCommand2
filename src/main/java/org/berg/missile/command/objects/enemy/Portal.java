@@ -15,29 +15,23 @@ public class Portal extends GameObject {
     setVelX(r.nextBoolean() ? 1 : -1);
     setVelY(r.nextBoolean() ? 1 : -1);
     this.setPoints(1000);
-    setTicks(r.nextInt(1000));
+    setTicks(r.nextInt(250));
   }
 
   @Override
   public void tick() {
-    setTicks(getTicks() + 1);
-    if (getTicks() > 10000) {
-      setTicks(0);
-    }
-    if (getTicks() % 500 == 0) {
-      setVelX(0);
-      setVelY(0);
-    }
+    countTicks();
+    stopMovement(500);
+    changeDirection(520, 2, 1, false);
     if (getTicks() % 510 == 0) {
       GameObjectFactory.spawnMothership(
           getX(), MOTHERSHIP_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
-      setVelX(r.nextBoolean() ? 2 : -2);
-      setVelY(r.nextBoolean() ? 1 : -1);
     }
 
     move();
     bounceOffEdges(0, WIDTH, PORTAL_MAX_HEIGHT, PORTAL_MAX_HEIGHT + HEIGHT / 10);
     die();
+    resetTicks(550);
   }
 
   @Override

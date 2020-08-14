@@ -21,27 +21,25 @@ public class Mothership extends GameObject {
 
   @Override
   public void tick() {
-    setTicks(getTicks() + 1);
-    if (getTicks() > 10000) {
-      setTicks(0);
-    }
+    countTicks();
+    stopMovement(500);
+    changeDirection(600, 5, 2);
     if (getTicks() % 550 == 0) {
       GameObjectFactory.spawnUfo(getX(), UFO_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
-      setVelX(r.nextInt(11) - 5);
-      setVelY(r.nextInt(5) - 2);
     }
-    if (getTicks() % 500 == 0) {
-      setVelX(0);
-      setVelY(0);
-    }
+
     move();
     bounceOffEdges(0, WIDTH, MOTHERSHIP_MAX_HEIGHT, MOTHERSHIP_MAX_HEIGHT + HEIGHT / 10);
     die();
+    resetTicks(600);
   }
 
   @Override
   public void render(Graphics g) {
     g.setColor(new Color(50, 50, 50));
+    if (!isAlive()) {
+      flicker(g, Color.RED, Color.YELLOW, Color.ORANGE, Color.WHITE);
+    }
     g.fillPolygon(
         new Polygon(
             new int[] {getX() - 64, getX() - 72, getX() + 64},

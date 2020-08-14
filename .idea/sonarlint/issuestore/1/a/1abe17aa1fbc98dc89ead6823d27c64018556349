@@ -1,20 +1,21 @@
 
 E
-java:S1066k"/Merge this if statement with the enclosing one.(ıóş¡
-E
-java:S1066l"/Merge this if statement with the enclosing one.(œé©ú
-m	java:S127z"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
-T
-java:S1155"">Use isEmpty() to check whether the collection is empty or not.(†¤ÕŸ
-
-java:S1186“"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µù×µüÿÿÿÿ
-m
-java:S37766"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(¥¯‡¾üÿÿÿÿ
-Y
-java:S3252@">Use static access with "java.awt.geom.Point2D" for "distance".(üòàÇùÿÿÿÿ
-T
-java:S1994t"9Move the update of "back" into this loop's update clause.(Š‰Ğşÿÿÿÿ
-Q
-java:S1133“"5Do not forget to remove this deprecated code someday.(µù×µüÿÿÿÿ
-D
-java:S1123“"(Add the missing @deprecated Javadoc tag.(µù×µüÿÿÿÿ
+java:S1481"*Remove this unused "index" local variable.(ìüà·8±Úœü¼.
+k	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+k
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(¥¯‡¾üÿÿÿÿ
+s	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(¿ïÔ 8ã‰ºı¼.
+H
+java:S1481"-Remove this unused "nextMain" local variable.(º§£Ç8ÿÚ½ü¼.
+R
+java:S1155">Use isEmpty() to check whether the collection is empty or not.(†¤ÕŸ
+W
+java:S3252">Use static access with "java.awt.geom.Point2D" for "distance".(üòàÇùÿÿÿÿ
+6
+java:S3626"Remove this redundant jump.(ÉŠ©ƒ8ÿ³ºı¼.
+C
+java:S1066"/Merge this if statement with the enclosing one.(ıóş¡
+C
+java:S1066"/Merge this if statement with the enclosing one.(œé©ú
+R
+java:S1994"9Move the update of "back" into this loop's update clause.(Š‰Ğşÿÿÿÿ

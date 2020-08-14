@@ -20,35 +20,17 @@ public class Ufo extends GameObject {
 
   @Override
   public void tick() {
-    setTicks(getTicks() + 1);
-    if (getTicks() == 10000) {
-      setTicks(0);
-    }
-    if (getTicks() % ALIEN_SPAWN_SPEED == 50) {
-      setVelX(r.nextInt(30) - 15);
-      setVelY(r.nextInt(5) - 2);
-    }
-    if (getTicks() % ALIEN_SPAWN_SPEED < 50) {
-      setVelX(0);
-      setVelY(0);
-    }
-
+    countTicks();
+    changeDirection(ALIEN_SPAWN_SPEED, 15, 2);
+    stopMovement(ALIEN_SPAWN_SPEED / 2 + 1);
     move();
     bounceOffEdges(0, WIDTH, UFO_MAX_HEIGHT, UFO_MAX_HEIGHT + HEIGHT / 10);
-    if (getY() < UFO_MAX_HEIGHT) {
-      setY(UFO_MAX_HEIGHT);
-      setVelY(-getVelY());
-    }
-    if (getY() > UFO_MAX_HEIGHT + HEIGHT / 10) {
-      setY(UFO_MAX_HEIGHT + HEIGHT / 10);
-      setVelY(-getVelY());
-    }
     die();
-
-    if (isAlive() && getTicks() % ALIEN_SPAWN_SPEED == 50) {
+    if (isAlive() && getTicks() % ALIEN_SPAWN_SPEED == 0) {
       GameObjectFactory.spawnAlien(
           getX() + 16, ALIEN_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
     }
+    resetTicks(ALIEN_SPAWN_SPEED);
   }
 
   @Override
@@ -72,22 +54,26 @@ public class Ufo extends GameObject {
     g.fillOval(getX() + 24 + offset, getY() + 6, 4, 4);
 
     if (isAlive()) {
-      if (getTicks() % ALIEN_SPAWN_SPEED > 40 && getTicks() % ALIEN_SPAWN_SPEED < 50) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10
+          && getTicks() % ALIEN_SPAWN_SPEED < ALIEN_SPAWN_SPEED) {
         g.setColor(new Color(115, 115, 255));
         g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 6, HEIGHT);
         g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 6, HEIGHT);
       }
-      if (getTicks() % ALIEN_SPAWN_SPEED > 30 && getTicks() % ALIEN_SPAWN_SPEED < 40) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10 * 2
+          && getTicks() % ALIEN_SPAWN_SPEED < ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10) {
         g.setColor(new Color(115, 115, 255));
         g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 5, getY() + ((HEIGHT - getY()) / 4) * 3);
         g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 5, getY() + ((HEIGHT - getY()) / 4) * 3);
       }
-      if (getTicks() % ALIEN_SPAWN_SPEED > 20 && getTicks() % ALIEN_SPAWN_SPEED < 30) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10 * 3
+          && getTicks() % ALIEN_SPAWN_SPEED < ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10 * 2) {
         g.setColor(new Color(115, 115, 255));
         g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 4, getY() + ((HEIGHT - getY()) / 4) * 2);
         g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 4, getY() + ((HEIGHT - getY()) / 4) * 2);
       }
-      if (getTicks() % ALIEN_SPAWN_SPEED > 10 && getTicks() % ALIEN_SPAWN_SPEED < 20) {
+      if (getTicks() % ALIEN_SPAWN_SPEED > ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10 * 4
+          && getTicks() % ALIEN_SPAWN_SPEED < ALIEN_SPAWN_SPEED - ALIEN_SPAWN_SPEED / 10 * 3) {
         g.setColor(new Color(115, 115, 255));
         g.drawLine(getX() + 14, getY() + 16, getX() + 14 - 2, getY() + ((HEIGHT - getY()) / 4) * 1);
         g.drawLine(getX() + 18, getY() + 16, getX() + 18 + 2, getY() + ((HEIGHT - getY()) / 4) * 1);

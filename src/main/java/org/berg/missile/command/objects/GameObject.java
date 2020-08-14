@@ -2,9 +2,10 @@ package org.berg.missile.command.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.berg.missile.command.Settings;
 
 import java.awt.*;
+
+import static org.berg.missile.command.Settings.r;
 
 @Getter
 @Setter
@@ -33,14 +34,52 @@ public abstract class GameObject {
 
   public abstract void tick();
 
+  protected void changeDirection(int timing, int maxVelX, int maxVelY, boolean zeroAllowed) {
+    if (ticks % timing == 0) {
+      changeDirection(timing, maxVelX, maxVelY);
+      if (!zeroAllowed) {
+        while (velX == 0 && velY == 0) {
+          changeDirection(timing, maxVelX, maxVelY);
+        }
+      }
+    }
+  }
+
+  protected void changeDirection(int timing, int maxVelX, int maxVelY) {
+    if (ticks % timing == 0) {
+      setVelX(r.nextInt(maxVelX * 2 + 1) - maxVelX);
+      setVelY(r.nextInt(maxVelY * 2 + 1) - maxVelY);
+    }
+  }
+
+  public void stopMovement(int timing) {
+    if (getTicks() % timing == 0) {
+      setVelX(0);
+      setVelY(0);
+    }
+  }
+
   public abstract void render(Graphics g);
+
+  public void countTicks() {
+    ticks++;
+    if (ticks > 100000) {
+      ticks = 0;
+    }
+  }
+
+  public void resetTicks(int timing) {
+    if (ticks > timing) {
+      ticks = 0;
+    }
+  }
 
   public void flicker(Graphics g, Color... colors) {
     int limit = 5;
     if (colors.length > 0) {
       limit = colors.length;
     }
-    switch (Settings.r.nextInt(limit)) {
+    switch (r.nextInt(limit)) {
       case 0:
         g.setColor(Color.white);
         if (colors.length > 0) {
@@ -145,7 +184,7 @@ public abstract class GameObject {
     } else {
       // down right
       setAccelX(1);
-      setAccelY(-1);
+      setAccelY(1);
       cardinal = 9;
     }
   }

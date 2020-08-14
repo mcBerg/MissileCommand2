@@ -131,18 +131,40 @@ public class Lightning extends GameObject {
   public void render(Graphics g) {
     var pointIterator = pointsArray.iterator();
     Point first = new Point(getX(), getY());
-    Point pointNext;
+    Point pointNext = null;
+    Point nextMain;
+    int index = 0;
     while (pointIterator.hasNext()) {
       pointNext = pointIterator.next();
-
       flicker(g, Color.WHITE, Color.BLUE, Color.YELLOW);
-
       g.drawLine(first.x, first.y, pointNext.x, pointNext.y);
       first = pointNext;
+      index++;
+    }
+    int i = pointsArray.size() - 1;
+    while (pointNext != null) {
+      flicker(g, Color.WHITE, Color.BLUE, Color.YELLOW);
+      g.drawLine(
+          pointNext.x + 1, pointNext.y + 1, pointsArray.get(i).x + 1, pointsArray.get(i).y + 1);
+      g.drawLine(
+          pointNext.x - 1, pointNext.y - 1, pointsArray.get(i).x - 1, pointsArray.get(i).y - 1);
+      g.drawLine(
+          pointNext.x - 1, pointNext.y + 1, pointsArray.get(i).x - 1, pointsArray.get(i).y + 1);
+      g.drawLine(
+          pointNext.x + 1, pointNext.y - 1, pointsArray.get(i).x + 1, pointsArray.get(i).y - 1);
+      if (pointsArray.indexOf(pointNext) == i && i > 0) {
+        i--;
+        continue;
+      }
+      if (i == 0) {
+        pointNext = null;
+        continue;
+      }
+      if (pointsArray.indexOf(pointNext) != i) {
+        pointNext = pointsArray.get(i);
+        i = pointsArray.indexOf(pointNext);
+        continue;
+      }
     }
   }
-
-  @Override
-  @Deprecated
-  public void addPoints(int points) {}
 }

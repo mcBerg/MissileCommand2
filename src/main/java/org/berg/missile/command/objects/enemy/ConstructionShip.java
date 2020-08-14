@@ -20,10 +20,7 @@ public class ConstructionShip extends GameObject {
 
   @Override
   public void tick() {
-    setTicks(getTicks() + 1);
-    if (getTicks() > 10000) {
-      setTicks(0);
-    }
+    countTicks();
     if (getTicks() % 500 == 0) {
       GameObjectFactory.spawnPortal(
           getX(), PORTAL_MAX_HEIGHT + r.nextInt(HEIGHT / 10), getHandler());
