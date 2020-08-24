@@ -1,8 +1,0 @@
-
-g
-java:S3457R"Q%n should be used in place of \n to produce the platform-specific line separator.(—Æ
-?
-java:S1948")Make "handler" transient or serializable.(Æ¶Ø…
-N	java:S106R"9Replace this use of System.out or System.err by a logger.(—Æ
-=
-java:S1948"(Make "thread" transient or serializable.(â£Ÿ4
